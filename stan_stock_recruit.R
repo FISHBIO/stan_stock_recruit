@@ -3,7 +3,7 @@
 # Date:            2026-11-02
 # Author:          Rob Eckelbecker
 # Email(s):        Roberteckelbecker@fishbio.com
-# Description:     Statisical methods for manuscript. Create stock recruit relationship between Oakdale and Caswell with covariates.
+# Description:     Statistical methods for manuscript. Create stock recruit relationship between Oakdale and Caswell with covariates.
 #                  Simulation modeling to estimate abundance under different water management scenarios.
 #                  Ver 1. Used for Drought and deluge manuscript
 # Functions:       NONE
