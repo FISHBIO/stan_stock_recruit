@@ -130,8 +130,8 @@ print(models)
 use.density = FALSE
 n.chains = 3
 n.iter = 200000
-n.burnin = 50000
-n.thin = 100
+n.burnin = 100000
+n.thin = 10
 
 #### Fit candidate models ####
 ## Write only parameters used by each candidate model. This avoids unconstrained 
@@ -251,7 +251,7 @@ comparison.table = comparison.table[order(comparison.table$DIC), ]
 comparison.table$DeltaDIC = comparison.table$DIC - min(comparison.table$DIC)
 comparison.table = comparison.table[, c('Model','Oak','Cas','DIC','DeltaDIC',
                                         'alpha_mean','beta_mean','b0_mean','gOak_mean','gOak_SD','p_gOak_gt_0',
-                                        'gCas_mean','gCas_SD','p_gCas_gt_0','bden_mean',
+                                        'gCas_mean','gCas_SD','p_gCas_gt_0',
                                         'sd_pro_Oak','sd_pro_Cas','max_Rhat')]
 ## R-squared: squared Pearson correlation on log observed/predicted abundance.
 comparison.table$Oak_R2 = NA_real_
@@ -425,7 +425,6 @@ scenario_table <- do.call(
   rbind,lapply(
     names(scenarios),
     function(s) {
-      
       x <- simulation_results[
         simulation_results$Scenario == s,]
       
@@ -443,7 +442,4 @@ scenario_table
 scenario_table[, 2:5] <- scenario_table[, 2:5] / 1000
 scenario_table
 
-#write.csv(simulation_results, "sim")
-
-
-
+write.csv(simulation_results, "scenario_table.csv")
