@@ -1,11 +1,12 @@
 # File-Name:       stan_stock_recruit
-# Version:         v.1
+# Version:         v.1.1
 # Date:            2026-11-02
 # Author:          Rob Eckelbecker
 # Email(s):        Roberteckelbecker@fishbio.com
 # Description:     Statistical methods for manuscript. Create stock recruit relationship between Oakdale and Caswell with covariates.
 #                  Simulation modeling to estimate abundance under different water management scenarios.
 #                  Ver 1. Used for Drought and deluge manuscript
+#                  Ver 1.1 Updated to include sd for alpha, beta, and beta 0
 # Functions:       NONE
 
 ## Oakdale juvenile production and Oakdale-Caswell survival ##
@@ -232,8 +233,9 @@ for(k in 1:nrow(models)) {
     max(x, na.rm = TRUE)
   }
   results[[k]] = data.frame(Model = models$Model[k], Oak = Oak.cov,
-                            Cas = Cas.cov, alpha_mean = get.mean('alpha'), beta_mean = get.mean('beta'),
-                            b0_mean = get.mean('b0'), gOak_mean = get.mean('gOak'),
+                            Cas = Cas.cov, alpha_mean = get.mean('alpha'), alpha_sd = get.sd('alpha'),
+                            beta_mean = get.mean('beta'), beta_sd = get.sd('beta'),
+                            b0_mean = get.mean('b0'), b0_sd = get.sd('b0'), gOak_mean = get.mean('gOak'),
                             gOak_SD = get.sd('gOak'), p_gOak_gt_0 = get.prob('gOak'),
                             gCas_mean = get.mean('gCas'), gCas_SD = get.sd('gCas'),
                             p_gCas_gt_0 = get.prob('gCas'),
@@ -250,7 +252,8 @@ comparison.table = do.call(rbind, results)
 comparison.table = comparison.table[order(comparison.table$DIC), ]
 comparison.table$DeltaDIC = comparison.table$DIC - min(comparison.table$DIC)
 comparison.table = comparison.table[, c('Model','Oak','Cas','DIC','DeltaDIC',
-                                        'alpha_mean','beta_mean','b0_mean','gOak_mean','gOak_SD','p_gOak_gt_0',
+                                        'alpha_mean', 'alpha_sd', 'beta_mean', 'beta_sd',
+                                        'b0_mean', 'b0_sd', 'gOak_mean','gOak_SD','p_gOak_gt_0',
                                         'gCas_mean','gCas_SD','p_gCas_gt_0',
                                         'sd_pro_Oak','sd_pro_Cas','max_Rhat')]
 ## R-squared: squared Pearson correlation on log observed/predicted abundance.
@@ -443,3 +446,7 @@ scenario_table[, 2:5] <- scenario_table[, 2:5] / 1000
 scenario_table
 
 write.csv(simulation_results, "scenario_table.csv")
+
+
+
+
